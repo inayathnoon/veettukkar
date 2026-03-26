@@ -1,7 +1,7 @@
 import * as functions from 'firebase-functions/v2';
 import * as admin from 'firebase-admin';
 import { geohashQueryBounds, distanceBetween } from 'geofire-common';
-import { sendWhatsApp } from '../notifications/whatsapp';
+import { sendWhatsApp, sendJobAlertWhatsApp } from '../notifications/whatsapp';
 
 const db = admin.firestore();
 const messaging = admin.messaging();
@@ -105,9 +105,9 @@ export const onJobCreated = functions.firestore.onDocumentCreated(
         }
       }
 
-      // Send WhatsApp fallback
+      // Send WhatsApp fallback (template: veettukkar_job_alert)
       if (worker.data.phone) {
-        await sendWhatsApp(worker.data.phone, `New job available: ${skill} on ${jobDateStr}. Open the app to accept.`).catch(() => null);
+        await sendJobAlertWhatsApp(worker.data.phone, skill, jobDateStr, locationGeo.geohash.slice(0, 6)).catch(() => null);
       }
     }
 
