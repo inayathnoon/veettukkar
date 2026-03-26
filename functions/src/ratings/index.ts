@@ -1,6 +1,6 @@
 import * as functions from 'firebase-functions/v2';
 import * as admin from 'firebase-admin';
-import { sendWhatsApp } from '../notifications/whatsapp';
+import { sendRatingReminderWhatsApp } from '../notifications/whatsapp';
 
 const db = admin.firestore();
 const messaging = admin.messaging();
@@ -91,10 +91,8 @@ export const promptRatings = functions.scheduler.onSchedule(
       }
 
       if (homeowner.phone) {
-        await sendWhatsApp(
-          homeowner.phone,
-          `How was the job today? Please rate your worker in the Veettukkar app.`
-        ).catch(() => null);
+        // Template: veettukkar_rating_reminder
+        await sendRatingReminderWhatsApp(homeowner.phone, job.skill).catch(() => null);
       }
 
       prompted++;
