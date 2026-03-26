@@ -1,0 +1,28 @@
+# Expo
+.expo/
+dist/
+web-build/
+expo-env.d.ts
+
+# Firebase credentials — NEVER commit these
+google-services.json
+GoogleService-Info.plist
+.firebaserc
+
+# Environment
+.env.local
+.env.*.local
+
+# Dependencies
+node_modules/
+functions/node_modules/
+
+# Build outputs
+functions/lib/
+
+# OS
+.DS_Store
+*.log
+
+# EAS
+.easignore

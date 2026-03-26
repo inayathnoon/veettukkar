@@ -1,0 +1,102 @@
+{
+  "app": {
+    "name": "वीट्टुक्कार"
+  },
+  "auth": {
+    "login": {
+      "title": "लॉगिन",
+      "tagline": "Kerala's home services marketplace",
+      "phone_label": "फ़ोन नंबर",
+      "phone_placeholder": "+91 XXXXX XXXXX",
+      "send_otp": "OTP भेजें",
+      "otp_label": "OTP",
+      "verify": "सत्यापित करें",
+      "resend": "OTP दोबारा भेजें"
+    },
+    "role_select": {
+      "title": "आप कौन हैं?",
+      "homeowner": "घर मालिक",
+      "worker": "मजदूर",
+      "homeowner_desc": "मजदूर खोजें",
+      "worker_desc": "काम खोजें"
+    }
+  },
+  "nav": {
+    "home": "होम",
+    "jobs": "काम",
+    "my_jobs": "मेरे काम",
+    "profile": "प्रोफ़ाइल",
+    "history": "इतिहास"
+  },
+  "homeowner": {
+    "home": {
+      "title": "काम दें",
+      "post_job": "काम पोस्ट करें",
+      "no_jobs": "अभी तक कोई काम नहीं"
+    },
+    "post_job": {
+      "title": "काम की जानकारी",
+      "skill_label": "किस तरह का काम",
+      "date_label": "तारीख",
+      "duration_label": "समय",
+      "half_day": "आधा दिन",
+      "full_day": "पूरा दिन",
+      "location_label": "जगह",
+      "description_label": "विवरण",
+      "urgent": "जरूरी",
+      "submit": "काम दें"
+    }
+  },
+  "worker": {
+    "home": {
+      "title": "उपलब्ध काम",
+      "available_today": "आज उपलब्ध",
+      "no_jobs": "आज कोई काम नहीं"
+    },
+    "profile": {
+      "title": "मेरी प्रोफ़ाइल",
+      "name_label": "नाम",
+      "skills_label": "कौशल",
+      "day_rate_label": "दिन की मजदूरी (₹)",
+      "half_day_rate_label": "आधे दिन की मजदूरी (₹)",
+      "location_label": "जगह",
+      "photo_label": "फ़ोटो",
+      "verify_aadhaar": "आधार से सत्यापित करें",
+      "verified": "सत्यापित ✓",
+      "save": "सहेजें"
+    }
+  },
+  "skills": {
+    "coconut_tree_climber": "नारियल पेड़ चढ़ाई",
+    "painter": "पेंटर",
+    "cleaner": "सफाई कर्मचारी",
+    "construction": "निर्माण मजदूर",
+    "plumber": "प्लंबर",
+    "electrician": "इलेक्ट्रीशियन"
+  },
+  "job": {
+    "status": {
+      "open": "खुला",
+      "confirmed": "पक्का",
+      "completed": "पूरा",
+      "expired": "समाप्त"
+    },
+    "urgent": "जरूरी",
+    "accept": "स्वीकार करें",
+    "decline": "मना करें"
+  },
+  "rating": {
+    "title": "रेटिंग",
+    "prompt": "काम कैसा था?",
+    "comment_placeholder": "टिप्पणी (वैकल्पिक)",
+    "submit": "जमा करें"
+  },
+  "common": {
+    "loading": "लोड हो रहा है...",
+    "error": "कुछ गड़बड़ हो गई",
+    "retry": "फिर से कोशिश करें",
+    "cancel": "रद्द करें",
+    "save": "सहेजें",
+    "logout": "लॉग आउट"
+  }
+}

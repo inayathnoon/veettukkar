@@ -1,0 +1,102 @@
+{
+  "app": {
+    "name": "Veettukkar"
+  },
+  "auth": {
+    "login": {
+      "title": "Login",
+      "tagline": "Kerala's home services marketplace",
+      "phone_label": "Phone Number",
+      "phone_placeholder": "+91 XXXXX XXXXX",
+      "send_otp": "Send OTP",
+      "otp_label": "OTP",
+      "verify": "Verify",
+      "resend": "Resend OTP"
+    },
+    "role_select": {
+      "title": "Who are you?",
+      "homeowner": "Homeowner",
+      "worker": "Worker",
+      "homeowner_desc": "Find workers for your home",
+      "worker_desc": "Find work near you"
+    }
+  },
+  "nav": {
+    "home": "Home",
+    "jobs": "Jobs",
+    "my_jobs": "My Jobs",
+    "profile": "Profile",
+    "history": "History"
+  },
+  "homeowner": {
+    "home": {
+      "title": "Post a Job",
+      "post_job": "Post Job",
+      "no_jobs": "No jobs posted yet"
+    },
+    "post_job": {
+      "title": "Job Details",
+      "skill_label": "Skill needed",
+      "date_label": "Date",
+      "duration_label": "Duration",
+      "half_day": "Half day",
+      "full_day": "Full day",
+      "location_label": "Location",
+      "description_label": "Description",
+      "urgent": "Urgent",
+      "submit": "Post Job"
+    }
+  },
+  "worker": {
+    "home": {
+      "title": "Available Jobs",
+      "available_today": "Available Today",
+      "no_jobs": "No jobs available today"
+    },
+    "profile": {
+      "title": "My Profile",
+      "name_label": "Name",
+      "skills_label": "Skills",
+      "day_rate_label": "Day rate (₹)",
+      "half_day_rate_label": "Half day rate (₹)",
+      "location_label": "Location",
+      "photo_label": "Photo",
+      "verify_aadhaar": "Verify with Aadhaar",
+      "verified": "Verified ✓",
+      "save": "Save"
+    }
+  },
+  "skills": {
+    "coconut_tree_climber": "Coconut tree climber",
+    "painter": "Painter",
+    "cleaner": "Cleaner",
+    "construction": "Construction worker",
+    "plumber": "Plumber",
+    "electrician": "Electrician"
+  },
+  "job": {
+    "status": {
+      "open": "Open",
+      "confirmed": "Confirmed",
+      "completed": "Completed",
+      "expired": "Expired"
+    },
+    "urgent": "Urgent",
+    "accept": "Accept",
+    "decline": "Decline"
+  },
+  "rating": {
+    "title": "Rate",
+    "prompt": "How was the job?",
+    "comment_placeholder": "Comment (optional)",
+    "submit": "Submit"
+  },
+  "common": {
+    "loading": "Loading...",
+    "error": "Something went wrong",
+    "retry": "Try again",
+    "cancel": "Cancel",
+    "save": "Save",
+    "logout": "Log out"
+  }
+}
