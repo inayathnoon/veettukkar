@@ -1,0 +1,23 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "Expo Dev Server",
+      "runtimeExecutable": "/bin/bash",
+      "runtimeArgs": ["/Users/noon/Work/veettukkar/.claude/expo-start.sh"],
+      "port": 8081
+    },
+    {
+      "name": "Firebase Emulators",
+      "runtimeExecutable": "/Users/noon/.nvm/versions/node/v24.11.1/bin/npx",
+      "runtimeArgs": ["firebase", "emulators:start"],
+      "port": 4000
+    },
+    {
+      "name": "Cloud Functions (watch)",
+      "runtimeExecutable": "/Users/noon/.nvm/versions/node/v24.11.1/bin/npm",
+      "runtimeArgs": ["run", "build:watch"],
+      "port": 5001
+    }
+  ]
+}

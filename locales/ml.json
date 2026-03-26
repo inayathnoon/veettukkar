@@ -1,0 +1,102 @@
+{
+  "app": {
+    "name": "വീട്ടുക്കാർ"
+  },
+  "auth": {
+    "login": {
+      "title": "ലോഗിൻ",
+      "tagline": "Kerala's home services marketplace",
+      "phone_label": "ഫോൺ നമ്പർ",
+      "phone_placeholder": "+91 XXXXX XXXXX",
+      "send_otp": "OTP അയയ്ക്കുക",
+      "otp_label": "OTP",
+      "verify": "പരിശോധിക്കുക",
+      "resend": "വീണ്ടും അയയ്ക്കുക"
+    },
+    "role_select": {
+      "title": "നിങ്ങൾ ആരാണ്?",
+      "homeowner": "വീട്ടുടമ",
+      "worker": "തൊഴിലാളി",
+      "homeowner_desc": "ജോലിക്കാരെ കണ്ടെത്തുക",
+      "worker_desc": "ജോലി കണ്ടെത്തുക"
+    }
+  },
+  "nav": {
+    "home": "ഹോം",
+    "jobs": "ജോലികൾ",
+    "my_jobs": "എന്റെ ജോലികൾ",
+    "profile": "പ്രൊഫൈൽ",
+    "history": "ചരിത്രം"
+  },
+  "homeowner": {
+    "home": {
+      "title": "ജോലി നൽകുക",
+      "post_job": "ജോലി പോസ്റ്റ് ചെയ്യുക",
+      "no_jobs": "ഇതുവരെ ജോലികളൊന്നുമില്ല"
+    },
+    "post_job": {
+      "title": "ജോലി വിവരങ്ങൾ",
+      "skill_label": "ജോലിക്കാരന്റെ തൊഴിൽ",
+      "date_label": "തീയതി",
+      "duration_label": "ദൈർഘ്യം",
+      "half_day": "അര ദിവസം",
+      "full_day": "മുഴുവൻ ദിവസം",
+      "location_label": "സ്ഥലം",
+      "description_label": "വിവരണം",
+      "urgent": "അടിയന്തിരം",
+      "submit": "ജോലി നൽകുക"
+    }
+  },
+  "worker": {
+    "home": {
+      "title": "ലഭ്യമായ ജോലികൾ",
+      "available_today": "ഇന്ന് ലഭ്യം",
+      "no_jobs": "ഇന്ന് ജോലികളൊന്നുമില്ല"
+    },
+    "profile": {
+      "title": "എന്റെ പ്രൊഫൈൽ",
+      "name_label": "പേര്",
+      "skills_label": "തൊഴിൽ",
+      "day_rate_label": "ദിവസ ശമ്പളം (₹)",
+      "half_day_rate_label": "അര ദിവസം (₹)",
+      "location_label": "സ്ഥലം",
+      "photo_label": "ഫോട്ടോ",
+      "verify_aadhaar": "ആധാർ പരിശോധന",
+      "verified": "പരിശോധിച്ചത് ✓",
+      "save": "സൂക്ഷിക്കുക"
+    }
+  },
+  "skills": {
+    "coconut_tree_climber": "തെങ്ങ് കയറ്റം",
+    "painter": "പെയിന്റർ",
+    "cleaner": "ക്ലീനർ",
+    "construction": "നിർമ്മാണ",
+    "plumber": "പ്ലംബർ",
+    "electrician": "ഇലക്ട്രീഷ്യൻ"
+  },
+  "job": {
+    "status": {
+      "open": "തുറന്ന",
+      "confirmed": "സ്ഥിരീകരിച്ചത്",
+      "completed": "പൂർത്തിയായത്",
+      "expired": "കാലഹരണപ്പെട്ടത്"
+    },
+    "urgent": "അടിയന്തിരം",
+    "accept": "സ്വീകരിക്കുക",
+    "decline": "നിരസിക്കുക"
+  },
+  "rating": {
+    "title": "റേറ്റ് ചെയ്യുക",
+    "prompt": "ജോലി എങ്ങനെ ഉണ്ടായിരുന്നു?",
+    "comment_placeholder": "അഭിപ്രായം (ഓപ്ഷണൽ)",
+    "submit": "സമർപ്പിക്കുക"
+  },
+  "common": {
+    "loading": "ലോഡ് ചെയ്യുന്നു...",
+    "error": "പിശക് സംഭവിച്ചു",
+    "retry": "വീണ്ടും ശ്രമിക്കുക",
+    "cancel": "റദ്ദാക്കുക",
+    "save": "സൂക്ഷിക്കുക",
+    "logout": "ലോഗ്ഔട്ട്"
+  }
+}
