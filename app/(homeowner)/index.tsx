@@ -19,7 +19,15 @@ const STATUS_COLORS: Record<string, string> = {
   expired: '#8E8E93',
 };
 
-function JobCard({ job, onPress }: { job: JobDocument; onPress: () => void }) {
+function JobCard({
+  job,
+  onPress,
+  onRate,
+}: {
+  job: JobDocument;
+  onPress: () => void;
+  onRate?: () => void;
+}) {
   const { t } = useTranslation();
   return (
     <TouchableOpacity style={styles.card} onPress={onPress}>
@@ -29,11 +37,17 @@ function JobCard({ job, onPress }: { job: JobDocument; onPress: () => void }) {
           <Text style={styles.statusText}>{t(`job.status.${job.status}`)}</Text>
         </View>
       </View>
-      {job.urgent && (
-        <Text style={styles.urgentLabel}>{t('job.urgent')}</Text>
-      )}
+      {job.urgent && <Text style={styles.urgentLabel}>{t('job.urgent')}</Text>}
       <Text style={styles.cardLocation} numberOfLines={1}>{job.locationText}</Text>
       <Text style={styles.cardDuration}>{t(`homeowner.post_job.${job.duration}_day`)}</Text>
+      {job.status === 'confirmed' && onRate && (
+        <TouchableOpacity
+          style={styles.rateButton}
+          onPress={(e) => { e.stopPropagation(); onRate(); }}
+        >
+          <Text style={styles.rateButtonText}>{t('rating.title')} ★</Text>
+        </TouchableOpacity>
+      )}
     </TouchableOpacity>
   );
 }
@@ -71,6 +85,11 @@ export default function HomeownerHomeScreen() {
             <JobCard
               job={item}
               onPress={() => router.push({ pathname: '/(homeowner)/job-detail', params: { id: item.jobId } })}
+              onRate={
+                item.status === 'confirmed' && item.acceptedWorkerId
+                  ? () => router.push({ pathname: '/(homeowner)/rate-worker', params: { jobId: item.jobId, workerUid: item.acceptedWorkerId } })
+                  : undefined
+              }
             />
           }
           contentContainerStyle={styles.list}
@@ -114,4 +133,12 @@ const styles = StyleSheet.create({
   urgentLabel: { color: '#FF3B30', fontSize: 12, fontWeight: '600', marginBottom: 4 },
   cardLocation: { fontSize: 14, color: '#555', marginBottom: 2 },
   cardDuration: { fontSize: 13, color: '#888' },
+  rateButton: {
+    marginTop: 10,
+    backgroundColor: '#FF9500',
+    borderRadius: 8,
+    paddingVertical: 8,
+    alignItems: 'center',
+  },
+  rateButtonText: { color: '#fff', fontSize: 13, fontWeight: '600' },
 });
