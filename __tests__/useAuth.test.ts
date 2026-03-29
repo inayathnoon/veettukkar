@@ -1,38 +1,47 @@
-import { renderHook, act, waitFor } from '@testing-library/react-native';
+import { renderHook, act } from '@testing-library/react-native';
 import { useAuth } from '../hooks/useAuth';
 import * as firebase from '../lib/firebase';
 
-// Mock Firebase modules
-jest.mock('../lib/firebase', () => ({
-  auth: jest.fn(() => ({
+// All auth() calls return the same instance (closed over in the factory).
+// PhoneAuthProvider lives as a static property on the auth function itself.
+jest.mock('../lib/firebase', () => {
+  const instance = {
     signInWithPhoneNumber: jest.fn(),
     signInWithCredential: jest.fn(),
     signOut: jest.fn(),
-    currentUser: null,
+    currentUser: null as any,
     onAuthStateChanged: jest.fn(),
-    PhoneAuthProvider: {
-      credential: jest.fn(),
+  };
+  const authFn = jest.fn(() => instance);
+  (authFn as any).PhoneAuthProvider = { credential: jest.fn() };
+
+  return {
+    auth: authFn,
+    firestore: {
+      Timestamp: {
+        now: jest.fn(() => ({ toMillis: () => Date.now() })),
+      },
     },
-  })),
-  firestore: jest.fn(() => ({
-    collection: jest.fn(),
-    Timestamp: {
-      now: jest.fn(() => ({ toMillis: () => Date.now() })),
-    },
-  })),
-  collections: {
-    users: jest.fn(() => ({
-      doc: jest.fn(() => ({
-        set: jest.fn(),
-        get: jest.fn(),
+    collections: {
+      users: jest.fn(() => ({
+        doc: jest.fn(() => ({
+          set: jest.fn(),
+          get: jest.fn(),
+        })),
       })),
-    })),
-  },
-}));
+    },
+  };
+});
 
 describe('useAuth', () => {
+  // Convenience accessors — same objects every time due to closure above
+  const authInstance = () => (firebase.auth as jest.Mock)();
+  const phoneCredential = () => (firebase.auth as any).PhoneAuthProvider.credential as jest.Mock;
+
   beforeEach(() => {
     jest.clearAllMocks();
+    // Restore currentUser to null after any test that mutates it
+    authInstance().currentUser = null;
   });
 
   it('should initialize with empty state', () => {
@@ -44,28 +53,23 @@ describe('useAuth', () => {
   });
 
   it('should handle phone number formatting for OTP', async () => {
-    const { result } = renderHook(() => useAuth());
-    const mockAuth = firebase.auth();
+    const instance = authInstance();
+    instance.signInWithPhoneNumber.mockResolvedValue({ verificationId: 'test-verification-id' });
 
-    (mockAuth.signInWithPhoneNumber as jest.Mock).mockResolvedValue({
-      verificationId: 'test-verification-id',
-    });
+    const { result } = renderHook(() => useAuth());
 
     await act(async () => {
       await result.current.sendOTP('9876543210');
     });
 
-    expect(mockAuth.signInWithPhoneNumber).toHaveBeenCalledWith('+919876543210', true);
+    expect(instance.signInWithPhoneNumber).toHaveBeenCalledWith('+919876543210', true);
   });
 
   it('should handle OTP sending error', async () => {
-    const { result } = renderHook(() => useAuth());
-    const mockAuth = firebase.auth();
+    const instance = authInstance();
+    instance.signInWithPhoneNumber.mockRejectedValue(new Error('Too many requests'));
 
-    const errorMessage = 'Too many requests';
-    (mockAuth.signInWithPhoneNumber as jest.Mock).mockRejectedValue(
-      new Error(errorMessage)
-    );
+    const { result } = renderHook(() => useAuth());
 
     const sendResult = await act(async () => {
       return await result.current.sendOTP('9876543210');
@@ -76,38 +80,31 @@ describe('useAuth', () => {
   });
 
   it('should verify OTP and sign in', async () => {
+    const instance = authInstance();
+    instance.signInWithPhoneNumber.mockResolvedValue({ verificationId: 'test-verification-id' });
+    phoneCredential().mockReturnValue('test-credential');
+    instance.signInWithCredential.mockResolvedValue({});
+
     const { result } = renderHook(() => useAuth());
-    const mockAuth = firebase.auth() as any;
 
-    (mockAuth.signInWithPhoneNumber as jest.Mock).mockResolvedValue({
-      verificationId: 'test-verification-id',
-    });
-
-    // Send OTP first
     await act(async () => {
       await result.current.sendOTP('9876543210');
     });
-
-    // Verify OTP
-    (mockAuth.PhoneAuthProvider.credential as jest.Mock).mockReturnValue('test-credential');
-    (mockAuth.signInWithCredential as jest.Mock).mockResolvedValue({});
 
     const verifyResult = await act(async () => {
       return await result.current.verifyOTP('test-verification-id', '123456');
     });
 
     expect(verifyResult.success).toBe(true);
-    expect(mockAuth.signInWithCredential).toHaveBeenCalledWith('test-credential');
+    expect(instance.signInWithCredential).toHaveBeenCalledWith('test-credential');
   });
 
   it('should handle OTP verification error', async () => {
-    const { result } = renderHook(() => useAuth());
-    const mockAuth = firebase.auth() as any;
+    const instance = authInstance();
+    phoneCredential().mockReturnValue('test-credential');
+    instance.signInWithCredential.mockRejectedValue(new Error('Invalid OTP'));
 
-    (mockAuth.PhoneAuthProvider.credential as jest.Mock).mockReturnValue('test-credential');
-    (mockAuth.signInWithCredential as jest.Mock).mockRejectedValue(
-      new Error('Invalid OTP')
-    );
+    const { result } = renderHook(() => useAuth());
 
     const verifyResult = await act(async () => {
       return await result.current.verifyOTP('test-verification-id', '000000');
@@ -118,10 +115,11 @@ describe('useAuth', () => {
   });
 
   it('should create user profile with role', async () => {
-    const { result } = renderHook(() => useAuth());
-    const mockCollections = firebase.collections as any;
+    const instance = authInstance();
+    instance.currentUser = { uid: 'test-uid', phoneNumber: '+919876543210' };
+
     const mockUserDoc = {
-      set: jest.fn(),
+      set: jest.fn().mockResolvedValue(undefined),
       get: jest.fn().mockResolvedValue({
         exists: true,
         data: jest.fn().mockReturnValue({
@@ -132,16 +130,11 @@ describe('useAuth', () => {
         }),
       }),
     };
-
-    (mockCollections.users as jest.Mock).mockReturnValue({
+    (firebase.collections.users as jest.Mock).mockReturnValue({
       doc: jest.fn().mockReturnValue(mockUserDoc),
     });
 
-    // Mock auth current user
-    const mockAuth = firebase.auth() as any;
-    Object.defineProperty(mockAuth, 'currentUser', {
-      value: { uid: 'test-uid', phoneNumber: '+919876543210' },
-    });
+    const { result } = renderHook(() => useAuth());
 
     const createResult = await act(async () => {
       return await result.current.createUserProfile('worker');
@@ -152,16 +145,16 @@ describe('useAuth', () => {
   });
 
   it('should logout user', async () => {
-    const { result } = renderHook(() => useAuth());
-    const mockAuth = firebase.auth() as any;
+    const instance = authInstance();
+    instance.signOut.mockResolvedValue(undefined);
 
-    (mockAuth.signOut as jest.Mock).mockResolvedValue(undefined);
+    const { result } = renderHook(() => useAuth());
 
     const logoutResult = await act(async () => {
       return await result.current.logout();
     });
 
     expect(logoutResult.success).toBe(true);
-    expect(mockAuth.signOut).toHaveBeenCalled();
+    expect(instance.signOut).toHaveBeenCalled();
   });
 });
