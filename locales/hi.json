@@ -26,7 +26,8 @@
     "jobs": "काम",
     "my_jobs": "मेरे काम",
     "profile": "प्रोफ़ाइल",
-    "history": "इतिहास"
+    "history": "इतिहास",
+    "settings": "सेटिंग्स"
   },
   "homeowner": {
     "home": {
@@ -90,6 +91,21 @@
     "prompt": "काम कैसा था?",
     "comment_placeholder": "टिप्पणी (वैकल्पिक)",
     "submit": "जमा करें"
+  },
+  "settings": {
+    "title": "सेटिंग्स",
+    "language": "भाषा",
+    "logout_confirm_title": "लॉग आउट",
+    "logout_confirm_body": "क्या आप sure हैं?"
+  },
+  "aadhaar": {
+    "description": "DigiLocker के ज़रिए आधार से पहचान सत्यापित करें। आपकी प्रोफ़ाइल पर Verified ✓ बैज मिलेगा।",
+    "step1": "1. नीचे 'DigiLocker खोलें' दबाएं",
+    "step2": "2. आधार एक्सेस की अनुमति दें",
+    "step3": "3. ऐप पर वापस आएं और 'स्थिति जांचें' दबाएं",
+    "open_digilocker": "DigiLocker खोलें",
+    "check_status": "स्थिति जांचें",
+    "not_verified_yet": "सत्यापन अभी पूरा नहीं हुआ। पहले DigiLocker में प्रक्रिया पूरी करें।"
   },
   "common": {
     "loading": "लोड हो रहा है...",

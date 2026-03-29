@@ -3,7 +3,8 @@ import { View, Text, StyleSheet, ActivityIndicator } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { useLocalSearchParams } from 'expo-router';
 import { useJobs } from '../../hooks/useJobs';
-import { JobDocument } from '../../types';
+import { collections } from '../../lib/firebase';
+import { JobDocument, UserDocument } from '../../types';
 
 const STATUS_COLORS: Record<string, string> = {
   open: '#FF9500',
@@ -17,15 +18,19 @@ export default function JobDetailScreen() {
   const { id } = useLocalSearchParams<{ id: string }>();
   const { getJob } = useJobs();
   const [job, setJob] = useState<JobDocument | null>(null);
+  const [worker, setWorker] = useState<UserDocument | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (id) {
-      getJob(id).then((data) => {
-        setJob(data);
-        setLoading(false);
-      });
-    }
+    if (!id) return;
+    getJob(id).then(async (data) => {
+      setJob(data);
+      if (data?.acceptedWorkerId) {
+        const workerDoc = await collections.users().doc(data.acceptedWorkerId).get();
+        if (workerDoc.exists) setWorker(workerDoc.data() as UserDocument);
+      }
+      setLoading(false);
+    });
   }, [id]);
 
   if (loading) {
@@ -82,6 +87,22 @@ export default function JobDetailScreen() {
           <Text style={styles.descriptionText}>{job.description}</Text>
         </View>
       ) : null}
+
+      {worker && (
+        <View style={styles.workerBlock}>
+          <View style={styles.workerRow}>
+            <Text style={styles.workerName}>{worker.name}</Text>
+            {worker.aadhaarVerified && (
+              <View style={styles.verifiedBadge}>
+                <Text style={styles.verifiedText}>{t('worker.profile.verified')}</Text>
+              </View>
+            )}
+          </View>
+          {worker.phone ? (
+            <Text style={styles.workerPhone}>{worker.phone}</Text>
+          ) : null}
+        </View>
+      )}
     </View>
   );
 }
@@ -111,4 +132,20 @@ const styles = StyleSheet.create({
   descriptionBlock: { marginTop: 16 },
   descriptionText: { fontSize: 14, color: '#444', marginTop: 6, lineHeight: 20 },
   errorText: { fontSize: 16, color: '#666' },
+  workerBlock: {
+    marginTop: 20,
+    paddingTop: 16,
+    borderTopWidth: 1,
+    borderColor: '#f0f0f0',
+  },
+  workerRow: { flexDirection: 'row', alignItems: 'center', gap: 10, marginBottom: 4 },
+  workerName: { fontSize: 16, fontWeight: '600', color: '#1a1a1a' },
+  verifiedBadge: {
+    backgroundColor: '#e8f5e9',
+    borderRadius: 6,
+    paddingHorizontal: 8,
+    paddingVertical: 2,
+  },
+  verifiedText: { color: '#2e7d32', fontSize: 12, fontWeight: '600' },
+  workerPhone: { fontSize: 14, color: '#555' },
 });
