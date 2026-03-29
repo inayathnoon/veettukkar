@@ -26,7 +26,8 @@
     "jobs": "Jobs",
     "my_jobs": "My Jobs",
     "profile": "Profile",
-    "history": "History"
+    "history": "History",
+    "settings": "Settings"
   },
   "homeowner": {
     "home": {
@@ -90,6 +91,21 @@
     "prompt": "How was the job?",
     "comment_placeholder": "Comment (optional)",
     "submit": "Submit"
+  },
+  "settings": {
+    "title": "Settings",
+    "language": "Language",
+    "logout_confirm_title": "Log out",
+    "logout_confirm_body": "Are you sure?"
+  },
+  "aadhaar": {
+    "description": "Verify your identity with Aadhaar via DigiLocker. You'll get a Verified ✓ badge on your profile.",
+    "step1": "1. Tap 'Open DigiLocker' below",
+    "step2": "2. Grant access to your Aadhaar",
+    "step3": "3. Return to the app and tap 'Check status'",
+    "open_digilocker": "Open DigiLocker",
+    "check_status": "Check status",
+    "not_verified_yet": "Verification not complete yet. Finish the steps in DigiLocker first."
   },
   "common": {
     "loading": "Loading...",

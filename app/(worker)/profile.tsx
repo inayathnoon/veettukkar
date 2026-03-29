@@ -11,6 +11,7 @@ import {
   Alert,
 } from 'react-native';
 import { useTranslation } from 'react-i18next';
+import { useRouter } from 'expo-router';
 import * as ImagePicker from 'expo-image-picker';
 import { useWorkerProfile } from '../../hooks/useWorkerProfile';
 import { WorkerSkill } from '../../types';
@@ -26,6 +27,7 @@ const ALL_SKILLS: WorkerSkill[] = [
 
 export default function WorkerProfileScreen() {
   const { t } = useTranslation();
+  const router = useRouter();
   const { profileState, uploadState, loadProfile, saveProfile, uploadPhoto } =
     useWorkerProfile();
 
@@ -106,10 +108,18 @@ export default function WorkerProfileScreen() {
     <ScrollView style={styles.container} contentContainerStyle={styles.content}>
       <Text style={styles.heading}>{t('worker.profile.title')}</Text>
 
-      {profileState.profile?.aadhaarVerified && (
+      {profileState.profile?.aadhaarVerified ? (
         <View style={styles.verifiedBadge}>
           <Text style={styles.verifiedText}>{t('worker.profile.verified')}</Text>
         </View>
+      ) : (
+        <TouchableOpacity
+          style={styles.verifyButton}
+          onPress={() => router.push('/(worker)/verify-aadhaar')}
+          disabled={isLoading}
+        >
+          <Text style={styles.verifyButtonText}>{t('worker.profile.verify_aadhaar')}</Text>
+        </TouchableOpacity>
       )}
 
       {/* Photo picker */}
@@ -212,6 +222,16 @@ const styles = StyleSheet.create({
     marginBottom: 16,
   },
   verifiedText: { color: '#2e7d32', fontWeight: '600', fontSize: 14 },
+  verifyButton: {
+    borderWidth: 1,
+    borderColor: '#007AFF',
+    borderRadius: 8,
+    paddingHorizontal: 12,
+    paddingVertical: 6,
+    alignSelf: 'flex-start',
+    marginBottom: 16,
+  },
+  verifyButtonText: { color: '#007AFF', fontWeight: '600', fontSize: 14 },
   photoArea: {
     width: 100,
     height: 100,
