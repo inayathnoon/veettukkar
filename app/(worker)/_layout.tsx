@@ -9,6 +9,7 @@ export default function WorkerLayout() {
       <Tabs.Screen name="index" options={{ title: t('nav.jobs') }} />
       <Tabs.Screen name="my-jobs" options={{ title: t('nav.my_jobs') }} />
       <Tabs.Screen name="profile" options={{ title: t('nav.profile') }} />
+      <Tabs.Screen name="settings" options={{ title: t('nav.settings') }} />
     </Tabs>
   );
 }
