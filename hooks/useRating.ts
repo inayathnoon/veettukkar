@@ -1,6 +1,6 @@
 import { useState, useCallback } from 'react';
 import { auth, firestore, collections } from '../lib/firebase';
-import { RatingDocument } from '../types';
+import { RatingDocument, RatingDirection } from '../types';
 
 interface RatingState {
   submitting: boolean;
@@ -17,7 +17,13 @@ export function useRating() {
 
   // Submit a rating for a completed job
   const submitRating = useCallback(
-    async (jobId: string, toUid: string, stars: 1 | 2 | 3 | 4 | 5, comment?: string) => {
+    async (
+      jobId: string,
+      toUid: string,
+      direction: RatingDirection,
+      stars: 1 | 2 | 3 | 4 | 5,
+      comment?: string
+    ) => {
       setState({ submitting: true, error: null, submitted: false });
 
       try {
@@ -31,6 +37,7 @@ export function useRating() {
           jobId,
           fromUid: user.uid,
           toUid,
+          direction,
           stars,
           comment: comment?.trim() || undefined,
           createdAt: firestore.Timestamp.now(),

@@ -48,6 +48,9 @@ export interface UserDocument {
   ratingCount?: number;
   photoURL?: string;
   fcmToken?: string;
+  // Homeowner ratings (bidirectional)
+  homeownerRatingAvg?: number;
+  homeownerRatingCount?: number;
   createdAt: FirebaseFirestoreTypes.Timestamp;
   updatedAt: FirebaseFirestoreTypes.Timestamp;
 }
@@ -88,11 +91,14 @@ export interface JobDocument {
 
 // ─── Rating ───────────────────────────────────────────────────────────────────
 
+export type RatingDirection = 'homeowner_to_worker' | 'worker_to_homeowner';
+
 export interface RatingDocument {
   ratingId: string;
   jobId: string;
   fromUid: string;
   toUid: string;
+  direction: RatingDirection;
   stars: 1 | 2 | 3 | 4 | 5;
   comment?: string;
   createdAt: FirebaseFirestoreTypes.Timestamp;

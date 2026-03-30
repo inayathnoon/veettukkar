@@ -31,7 +31,7 @@ export default function RateWorkerScreen() {
       return;
     }
 
-    const result = await submitRating(jobId, workerUid, stars, comment);
+    const result = await submitRating(jobId, workerUid, 'homeowner_to_worker', stars, comment);
     if (result.success) {
       router.back();
     } else {

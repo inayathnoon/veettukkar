@@ -52,7 +52,7 @@ describe('useRating', () => {
     const { result } = renderHook(() => useRating());
 
     const submitResult = await act(async () => {
-      return await result.current.submitRating('job-1', 'worker-uid', 5, 'Great work!');
+      return await result.current.submitRating('job-1', 'worker-uid', 'homeowner_to_worker', 5, 'Great work!');
     });
 
     expect(submitResult.success).toBe(true);
@@ -61,6 +61,7 @@ describe('useRating', () => {
         jobId: 'job-1',
         toUid: 'worker-uid',
         fromUid: 'homeowner-uid',
+        direction: 'homeowner_to_worker',
         stars: 5,
         comment: 'Great work!',
       })
@@ -76,7 +77,7 @@ describe('useRating', () => {
     const { result } = renderHook(() => useRating());
 
     await act(async () => {
-      await result.current.submitRating('job-1', 'worker-uid', 4);
+      await result.current.submitRating('job-1', 'worker-uid', 'homeowner_to_worker', 4);
     });
 
     expect(jobsCol.doc().update).toHaveBeenCalledWith({ status: 'completed' });
