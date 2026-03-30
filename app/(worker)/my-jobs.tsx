@@ -5,8 +5,10 @@ import {
   FlatList,
   StyleSheet,
   ActivityIndicator,
+  TouchableOpacity,
 } from 'react-native';
 import { useTranslation } from 'react-i18next';
+import { useRouter } from 'expo-router';
 import { useWorkerJobFeed } from '../../hooks/useWorkerJobFeed';
 import { JobDocument } from '../../types';
 
@@ -19,7 +21,16 @@ const STATUS_COLORS: Record<string, string> = {
 
 function MyJobCard({ job }: { job: JobDocument }) {
   const { t } = useTranslation();
+  const router = useRouter();
   const jobDate = job.date.toDate?.() ?? new Date();
+  
+  const handleRateHomeowner = () => {
+    router.push({
+      pathname: '/(worker)/rate-homeowner',
+      params: { jobId: job.jobId, homeownerUid: job.homeownerId },
+    });
+  };
+
   return (
     <View style={styles.card}>
       <View style={styles.cardHeader}>
@@ -30,6 +41,12 @@ function MyJobCard({ job }: { job: JobDocument }) {
       </View>
       <Text style={styles.cardDate}>{jobDate.toLocaleDateString('en-IN')}</Text>
       <Text style={styles.cardLocation}>{job.locationText}</Text>
+      
+      {job.status === 'completed' && (
+        <TouchableOpacity style={styles.rateButton} onPress={handleRateHomeowner}>
+          <Text style={styles.rateButtonText}>{t('rating.rate_homeowner')}</Text>
+        </TouchableOpacity>
+      )}
     </View>
   );
 }
@@ -81,4 +98,12 @@ const styles = StyleSheet.create({
   statusText: { color: '#fff', fontSize: 12, fontWeight: '600' },
   cardDate: { fontSize: 13, color: '#888', marginBottom: 2 },
   cardLocation: { fontSize: 14, color: '#555' },
+  rateButton: {
+    marginTop: 12,
+    backgroundColor: '#34C759',
+    borderRadius: 8,
+    paddingVertical: 10,
+    alignItems: 'center',
+  },
+  rateButtonText: { color: '#fff', fontSize: 14, fontWeight: '600' },
 });
