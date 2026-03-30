@@ -83,7 +83,7 @@
       "day_rate_label": "Day rate (₹)",
       "half_day_rate_label": "Half day rate (₹)",
       "location_label": "Location",
-      "photo_label": "Photo",
+      "photo_label": "Profile photo",
       "verify_aadhaar": "Verify with Aadhaar",
       "verified": "Verified ✓",
       "save": "Save"
@@ -111,6 +111,8 @@
   "rating": {
     "title": "Rate",
     "prompt": "How was the job?",
+    "homeowner_prompt": "How was the homeowner?",
+    "rate_homeowner": "Rate homeowner",
     "comment_placeholder": "Comment (optional)",
     "submit": "Submit"
   },
@@ -129,6 +131,41 @@
     "check_status": "Check status",
     "not_verified_yet": "Verification not complete yet. Finish the steps in DigiLocker first."
   },
+  "onboarding": {
+    "address_picker": "Where do you live?",
+    "help_find_workers": "This helps us find workers nearby",
+    "use_current_location": "Use current location",
+    "enter_address": "Or enter address",
+    "address_placeholder": "District, Area",
+    "preferred_skills": "What skills do you need?",
+    "select_skills_you_use": "Select the skills you regularly need",
+    "notification_preferences": "How should we notify you?",
+    "how_to_notify_you": "Choose your preferred contact method",
+    "push_notifications": "Push notifications",
+    "instant_updates_in_app": "Instant updates in the app",
+    "whatsapp_messages": "WhatsApp messages",
+    "backup_if_no_push": "Backup if push notifications fail",
+    "complete_your_profile": "Complete your profile",
+    "help_homeowners_trust_you": "This helps homeowners trust you",
+    "profile_photo": "Profile photo",
+    "add_photo": "Add a photo",
+    "professional_photo_helps": "A professional photo helps you get more jobs",
+    "select_skills": "Select your skills",
+    "set_your_rates": "Set your rates (in ₹)",
+    "full_day_rate": "Full day rate",
+    "half_day_rate": "Half day rate",
+    "why_this_matters": "Why this matters",
+    "photo_builds_trust": "A good photo builds trust with homeowners",
+    "skills_help_matching": "Skills help us match you with the right jobs",
+    "rates_are_negotiable": "Rates are negotiable, these are starting points",
+    "complete_setup": "Complete setup"
+  },
+  "error": {
+    "select_at_least_one_skill": "Please select at least one skill",
+    "enter_rates": "Please enter both rates",
+    "rates_must_be_numbers": "Rates must be valid numbers",
+    "failed_to_complete_onboarding": "Failed to complete onboarding"
+  },
   "common": {
     "loading": "Loading...",
     "error": "Something went wrong",
@@ -136,6 +173,9 @@
     "retry": "Try again",
     "cancel": "Cancel",
     "save": "Save",
-    "logout": "Log out"
+    "logout": "Log out",
+    "continue": "Continue",
+    "skip": "Skip",
+    "or": "Or"
   }
 }

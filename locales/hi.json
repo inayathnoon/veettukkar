@@ -83,7 +83,7 @@
       "day_rate_label": "दिन की मजदूरी (₹)",
       "half_day_rate_label": "आधे दिन की मजदूरी (₹)",
       "location_label": "जगह",
-      "photo_label": "फ़ोटो",
+      "photo_label": "प्रोफ़ाइल फ़ोटो",
       "verify_aadhaar": "आधार से सत्यापित करें",
       "verified": "सत्यापित ✓",
       "save": "सहेजें"
@@ -111,6 +111,8 @@
   "rating": {
     "title": "रेटिंग",
     "prompt": "काम कैसा था?",
+    "homeowner_prompt": "घर मालिक कैसे थे?",
+    "rate_homeowner": "घर मालिक को रेट करें",
     "comment_placeholder": "टिप्पणी (वैकल्पिक)",
     "submit": "जमा करें"
   },
@@ -129,6 +131,41 @@
     "check_status": "स्थिति जांचें",
     "not_verified_yet": "सत्यापन अभी पूरा नहीं हुआ। पहले DigiLocker में प्रक्रिया पूरी करें।"
   },
+  "onboarding": {
+    "address_picker": "आप कहाँ रहते हैं?",
+    "help_find_workers": "यह हमें आपके पास के मजदूर खोजने में मदद करता है",
+    "use_current_location": "वर्तमान स्थान का उपयोग करें",
+    "enter_address": "या पता दर्ज करें",
+    "address_placeholder": "जिला, इलाका",
+    "preferred_skills": "आपको कौन से कौशल की जरूरत है?",
+    "select_skills_you_use": "वे कौशल चुनें जिनकी आपको नियमित रूप से आवश्यकता है",
+    "notification_preferences": "आपको हमें कैसे सूचित करना चाहिए?",
+    "how_to_notify_you": "अपनी पसंदीदा संपर्क विधि चुनें",
+    "push_notifications": "पुश सूचनाएं",
+    "instant_updates_in_app": "ऐप में तत्काल अपडेट",
+    "whatsapp_messages": "WhatsApp संदेश",
+    "backup_if_no_push": "यदि पुश सूचनाएं विफल हों तो बैकअप",
+    "complete_your_profile": "अपनी प्रोफ़ाइल पूरी करें",
+    "help_homeowners_trust_you": "यह घर मालिकों को आप पर भरोसा करने में मदद करता है",
+    "profile_photo": "प्रोफ़ाइल फोटो",
+    "add_photo": "फोटो जोड़ें",
+    "professional_photo_helps": "एक पेशेवर फोटो आपको अधिक नौकरियां पाने में मदद करता है",
+    "select_skills": "अपने कौशल चुनें",
+    "set_your_rates": "अपनी दरें निर्धारित करें (₹ में)",
+    "full_day_rate": "पूरे दिन की दर",
+    "half_day_rate": "आधे दिन की दर",
+    "why_this_matters": "यह क्यों महत्वपूर्ण है",
+    "photo_builds_trust": "एक अच्छी फोटो घर मालिकों के साथ विश्वास बनाता है",
+    "skills_help_matching": "कौशल हमें आपको सही नौकरियों से मिलाने में मदद करते हैं",
+    "rates_are_negotiable": "दरें योग्य हैं, ये शुरुआती बिंदु हैं",
+    "complete_setup": "सेटअप पूरा करें"
+  },
+  "error": {
+    "select_at_least_one_skill": "कृपया कम से कम एक कौशल चुनें",
+    "enter_rates": "कृपया दोनों दरें दर्ज करें",
+    "rates_must_be_numbers": "दरें वैध संख्याएं होनी चाहिए",
+    "failed_to_complete_onboarding": "ऑनबोर्डिंग पूरा करने में विफल"
+  },
   "common": {
     "loading": "लोड हो रहा है...",
     "error": "कुछ गड़बड़ हो गई",
@@ -136,6 +173,9 @@
     "retry": "फिर से कोशिश करें",
     "cancel": "रद्द करें",
     "save": "सहेजें",
-    "logout": "लॉग आउट"
+    "logout": "लॉग आउट",
+    "continue": "जारी रखें",
+    "skip": "छोड़ें",
+    "or": "या"
   }
 }
