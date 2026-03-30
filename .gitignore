@@ -19,6 +19,7 @@ functions/node_modules/
 
 # Build outputs
 functions/lib/
+coverage/
 
 # OS
 .DS_Store
