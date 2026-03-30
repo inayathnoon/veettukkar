@@ -1,19 +1,47 @@
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
+    // Users collection
     match /users/{userId} {
       allow read: if request.auth.uid == userId;
-      allow update: if request.auth.uid == userId && !request.resource.data.role exists && !request.resource.data.verified exists;
+      allow update: if request.auth.uid == userId && !request.resource.data.role exists && !request.resource.data.aadhaarVerified exists;
     }
+
+    // Jobs collection
     match /jobs/{jobId} {
-      allow read: if resource.data.createdBy == request.auth.uid;
-      allow create: if request.resource.data.createdBy == request.auth.uid && request.resource.data.createdAt == request.time;
-      allow update: if resource.data.createdBy == request.auth.uid;
+      // Homeowner can read/update their own jobs
+      allow read, update: if resource.data.homeownerId == request.auth.uid;
+      // Homeowner can create jobs
+      allow create: if request.resource.data.homeownerId == request.auth.uid && request.resource.data.createdAt == request.time;
+
+      // Workers can read open jobs (status = 'open')
+      allow read: if resource.data.status == 'open' && request.auth != null;
+
+      // Workers can update (accept) open jobs
+      allow update: if resource.data.status == 'open' &&
+                       request.resource.data.acceptedWorkerId == request.auth.uid &&
+                       request.resource.data.acceptedAt == request.time;
     }
+
+    // Ratings collection
     match /ratings/{ratingId} {
-      allow read: if resource.data.raterId == request.auth.uid || resource.data.ratedId == request.auth.uid;
-      allow create: if request.resource.data.raterId == request.auth.uid;
+      // User can read ratings they gave or received
+      allow read: if resource.data.fromUid == request.auth.uid || resource.data.toUid == request.auth.uid;
+      // User can create ratings they give
+      allow create: if request.resource.data.fromUid == request.auth.uid;
     }
+
+    // Notification queue (server only)
+    match /notifications_queue/{docId} {
+      allow read, write, delete: if false;
+    }
+
+    // WhatsApp queue (server only)
+    match /whatsapp_queue/{docId} {
+      allow read, write, delete: if false;
+    }
+
+    // Admin collection (admin only)
     match /admin/{document=**} {
       allow read, write: if request.auth.email == 'admin@veettukkar.app';
     }
