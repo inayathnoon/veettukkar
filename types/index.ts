@@ -25,6 +25,15 @@ export interface UserDocument {
     lat: number;
     lng: number;
   };
+  // Onboarding
+  onboardingComplete?: boolean;
+  onboardingStep?: number;
+  // Homeowner-only fields
+  preferredSkills?: WorkerSkill[];
+  notificationPreferences?: {
+    pushEnabled: boolean;
+    whatsappEnabled: boolean;
+  };
   // Worker-only fields
   skills?: WorkerSkill[];
   dayRate?: number;
