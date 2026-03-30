@@ -25,6 +25,18 @@ export interface UserDocument {
     lat: number;
     lng: number;
   };
+  // Onboarding
+  onboardingComplete?: boolean;
+  onboardingStep?: number;
+  // Homeowner-only fields
+  preferredSkills?: WorkerSkill[];
+  notificationPreferences?: {
+    pushEnabled: boolean;
+    whatsappEnabled: boolean;
+  };
+  cancelledJobCount?: number;
+  noshowReportCount?: number;
+  reportedAsUnreliable?: boolean;
   // Worker-only fields
   skills?: WorkerSkill[];
   dayRate?: number;
@@ -42,7 +54,7 @@ export interface UserDocument {
 
 // ─── Job ──────────────────────────────────────────────────────────────────────
 
-export type JobStatus = 'open' | 'confirmed' | 'completed' | 'expired';
+export type JobStatus = 'open' | 'confirmed' | 'completed' | 'expired' | 'cancelled' | 'noshow';
 export type JobDuration = 'half' | 'full';
 
 export interface JobDocument {
@@ -62,6 +74,14 @@ export interface JobDocument {
   status: JobStatus;
   acceptedWorkerId?: string;
   acceptedAt?: FirebaseFirestoreTypes.Timestamp;
+  cancelledAt?: FirebaseFirestoreTypes.Timestamp;
+  cancelReason?: string;
+  cancelledBy?: string;
+  noshowReport?: {
+    reportedBy: string;
+    note?: string;
+    reportedAt: FirebaseFirestoreTypes.Timestamp;
+  };
   createdAt: FirebaseFirestoreTypes.Timestamp;
   expiresAt: FirebaseFirestoreTypes.Timestamp;
 }

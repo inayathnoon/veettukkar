@@ -108,11 +108,40 @@ export function useJobs() {
     }
   }, []);
 
+  // Cancel a job (only if no confirmed worker)
+  const cancelJob = useCallback(async (jobId: string, reason: string) => {
+    try {
+      const user = auth().currentUser;
+      if (!user) throw new Error('Not authenticated');
+
+      const jobRef = collections.jobs().doc(jobId);
+      const jobDoc = await jobRef.get();
+
+      if (!jobDoc.exists) throw new Error('Job not found');
+
+      const job = jobDoc.data() as JobDocument;
+      if (job.acceptedWorkerId) throw new Error('Cannot cancel job with confirmed worker');
+      if (job.status !== 'open') throw new Error('Can only cancel open jobs');
+
+      await jobRef.update({
+        status: 'cancelled',
+        cancelledAt: firestore.Timestamp.now(),
+        cancelReason: reason,
+        cancelledBy: user.uid,
+      });
+
+      return { success: true };
+    } catch (error: any) {
+      return { success: false, error: error?.message || 'Failed to cancel job' };
+    }
+  }, []);
+
   return {
     jobsState,
     posting,
     loadMyJobs,
     postJob,
     getJob,
+    cancelJob,
   };
 }

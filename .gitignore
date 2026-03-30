@@ -26,3 +26,4 @@ functions/lib/
 
 # EAS
 .easignore
+node_modules

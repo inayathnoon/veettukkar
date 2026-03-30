@@ -25,11 +25,11 @@ export default function RoleSelectScreen() {
     try {
       const result = await createUserProfile(role);
       if (result.success) {
-        // Navigate to appropriate home screen
+        // Navigate to appropriate onboarding screen
         if (role === 'homeowner') {
-          router.replace('/(homeowner)');
+          router.replace('/(homeowner)/onboarding/address-picker');
         } else {
-          router.replace('/(worker)');
+          router.replace('/(worker)/onboarding/skills-step');
         }
       } else {
         Alert.alert('Error', result.error || 'Failed to select role');
