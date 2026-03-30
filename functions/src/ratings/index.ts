@@ -39,7 +39,7 @@ export const onRatingCreated = functions.firestore.onDocumentCreated(
 
 // ─── promptRatings ────────────────────────────────────────────────────────────
 // Runs daily at 8pm IST.
-// Sends rating prompts to homeowners for confirmed jobs from today without a rating.
+// Sends rating prompts to both homeowners and workers for confirmed jobs from today without a rating.
 
 export const promptRatings = functions.scheduler.onSchedule(
   { schedule: 'every day 20:00', timeZone: 'Asia/Kolkata' },
@@ -63,41 +63,70 @@ export const promptRatings = functions.scheduler.onSchedule(
     for (const jobDoc of jobsSnap.docs) {
       const job = jobDoc.data();
 
-      // Check if homeowner already rated
-      const existingRating = await db
+      // Prompt homeowner to rate worker
+      const homeownerRated = await db
         .collection('ratings')
         .where('jobId', '==', job.jobId)
         .where('fromUid', '==', job.homeownerId)
+        .where('direction', '==', 'homeowner_to_worker')
         .limit(1)
         .get();
 
-      if (!existingRating.empty) continue;
-
-      const homeownerDoc = await db.collection('users').doc(job.homeownerId).get();
-      const homeowner = homeownerDoc.data();
-      if (!homeowner) continue;
-
-      if (homeowner.fcmToken) {
-        await messaging
-          .send({
-            token: homeowner.fcmToken,
-            notification: {
-              title: 'ജോലി എങ്ങനെ ഉണ്ടായിരുന്നു?',
-              body: `${job.skill} — Rate your worker`,
-            },
-            data: { jobId: job.jobId, type: 'rating_prompt' },
-          })
-          .catch(() => null);
+      if (homeownerRated.empty) {
+        const homeownerDoc = await db.collection('users').doc(job.homeownerId).get();
+        const homeowner = homeownerDoc.data();
+        if (homeowner) {
+          if (homeowner.fcmToken) {
+            await messaging
+              .send({
+                token: homeowner.fcmToken,
+                notification: {
+                  title: 'ജോലി എങ്ങനെ ഉണ്ടായിരുന്നു?',
+                  body: `${job.skill} — Rate your worker`,
+                },
+                data: { jobId: job.jobId, type: 'rating_prompt' },
+              })
+              .catch(() => null);
+          }
+          if (homeowner.phone) {
+            await sendRatingReminderWhatsApp(homeowner.phone, job.skill).catch(() => null);
+          }
+          prompted++;
+        }
       }
 
-      if (homeowner.phone) {
-        // Template: veettukkar_rating_reminder
-        await sendRatingReminderWhatsApp(homeowner.phone, job.skill).catch(() => null);
-      }
+      // Prompt worker to rate homeowner
+      if (job.acceptedWorkerId) {
+        const workerRated = await db
+          .collection('ratings')
+          .where('jobId', '==', job.jobId)
+          .where('fromUid', '==', job.acceptedWorkerId)
+          .where('direction', '==', 'worker_to_homeowner')
+          .limit(1)
+          .get();
 
-      prompted++;
+        if (workerRated.empty) {
+          const workerDoc = await db.collection('users').doc(job.acceptedWorkerId).get();
+          const worker = workerDoc.data();
+          if (worker) {
+            if (worker.fcmToken) {
+              await messaging
+                .send({
+                  token: worker.fcmToken,
+                  notification: {
+                    title: 'വീട്ടിലാളി എങ്ങനെ ആയിരുന്നു?',
+                    body: 'Rate your homeowner',
+                  },
+                  data: { jobId: job.jobId, type: 'rating_prompt' },
+                })
+                .catch(() => null);
+            }
+            prompted++;
+          }
+        }
+      }
     }
 
-    console.log(`Sent rating prompts for ${prompted} jobs`);
+    console.log(`Sent rating prompts for ${prompted} users`);
   }
 );

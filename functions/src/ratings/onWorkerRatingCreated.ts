@@ -7,10 +7,10 @@ export const onWorkerRatingCreated = functions.firestore.onDocumentCreated('rati
   const rating = event.data?.data();
   if (!rating || rating.direction !== 'worker_to_homeowner') return;
 
-  const homeownerId = rating.ratedId;
+  const homeownerId = rating.toUid;
   const ratings = await db
     .collection('ratings')
-    .where('ratedId', '==', homeownerId)
+    .where('toUid', '==', homeownerId)
     .where('direction', '==', 'worker_to_homeowner')
     .get();
 
