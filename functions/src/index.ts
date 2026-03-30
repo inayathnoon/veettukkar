@@ -24,3 +24,6 @@ export { retryWhatsappQueue } from './whatsapp/retryWhatsappQueue';
 
 // Worker functions — INO-165 (P1-I: Aadhaar Verification)
 export { resetAvailableToday, initiateAadhaarVerification, verifyAadhaarCallback } from './workers/index';
+
+// Admin functions — INO-207 (P3-G: Admin Dashboard)
+export { getMetrics } from './admin/getMetrics';
