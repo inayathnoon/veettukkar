@@ -66,25 +66,25 @@ describe('RoleSelectScreen', () => {
     });
   });
 
-  it('should navigate to homeowner home on homeowner selection', async () => {
+  it('should navigate to homeowner onboarding on homeowner selection', async () => {
     render(<RoleSelectScreen />);
 
     const homeownerButton = screen.getByText('auth.role_select.homeowner');
     fireEvent.press(homeownerButton);
 
     await waitFor(() => {
-      expect(mockReplace).toHaveBeenCalledWith('/(homeowner)');
+      expect(mockReplace).toHaveBeenCalledWith('/(homeowner)/onboarding/address-picker');
     });
   });
 
-  it('should navigate to worker home on worker selection', async () => {
+  it('should navigate to worker onboarding on worker selection', async () => {
     render(<RoleSelectScreen />);
 
     const workerButton = screen.getByText('auth.role_select.worker');
     fireEvent.press(workerButton);
 
     await waitFor(() => {
-      expect(mockReplace).toHaveBeenCalledWith('/(worker)');
+      expect(mockReplace).toHaveBeenCalledWith('/(worker)/onboarding/skills-step');
     });
   });
 
