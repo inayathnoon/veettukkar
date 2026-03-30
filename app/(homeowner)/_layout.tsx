@@ -19,6 +19,7 @@ export default function HomeownerLayout() {
   return (
     <Tabs screenOptions={{ headerShown: false }}>
       <Tabs.Screen name="index" options={{ title: t('nav.home') }} />
+      <Tabs.Screen name="workers" options={{ title: t('nav.workers') }} />
       <Tabs.Screen name="history" options={{ title: t('nav.history') }} />
       <Tabs.Screen name="settings" options={{ title: t('nav.settings') }} />
     </Tabs>

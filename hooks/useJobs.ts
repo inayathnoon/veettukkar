@@ -12,6 +12,7 @@ export interface PostJobInput {
   locationLng: number;
   description: string;
   urgent: boolean;
+  workerPreferredId?: string;
 }
 
 interface JobsState {
@@ -84,6 +85,7 @@ export function useJobs() {
         urgent: input.urgent,
         description: input.description,
         status: 'open',
+        ...(input.workerPreferredId && { workerPreferredId: input.workerPreferredId }),
         createdAt: firestore.Timestamp.now(),
         expiresAt,
       };
