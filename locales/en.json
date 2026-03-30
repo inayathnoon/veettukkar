@@ -25,6 +25,7 @@
     "home": "Home",
     "jobs": "Jobs",
     "my_jobs": "My Jobs",
+    "workers": "Workers",
     "profile": "Profile",
     "history": "History",
     "settings": "Settings"
@@ -46,6 +47,27 @@
       "description_label": "Description",
       "urgent": "Urgent",
       "submit": "Post Job"
+    },
+    "browse": {
+      "title": "Find Workers",
+      "filter_skill": "Skill",
+      "all_skills": "All skills",
+      "filter_available": "Available today only",
+      "filter_rating": "Minimum rating",
+      "all_ratings": "All ratings",
+      "rating_4": "4⭐ and above",
+      "rating_45": "4.5⭐ and above",
+      "no_results": "No workers found matching your filters",
+      "day_rate": "Day rate",
+      "half_day_rate": "Half day rate",
+      "request_worker": "Request this worker",
+      "select_date": "Select date",
+      "confirm_request": "Confirm request",
+      "request_sent": "Request sent to worker",
+      "reliability_warning": "Reliability concerns",
+      "rates": "Rates",
+      "rating": "Rating",
+      "jobs": "jobs"
     }
   },
   "worker": {
@@ -110,6 +132,7 @@
   "common": {
     "loading": "Loading...",
     "error": "Something went wrong",
+    "success": "Success",
     "retry": "Try again",
     "cancel": "Cancel",
     "save": "Save",

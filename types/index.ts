@@ -75,6 +75,7 @@ export interface JobDocument {
   urgent: boolean;
   description: string;
   status: JobStatus;
+  workerPreferredId?: string;
   acceptedWorkerId?: string;
   acceptedAt?: FirebaseFirestoreTypes.Timestamp;
   cancelledAt?: FirebaseFirestoreTypes.Timestamp;

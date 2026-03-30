@@ -25,6 +25,7 @@
     "home": "होम",
     "jobs": "काम",
     "my_jobs": "मेरे काम",
+    "workers": "मजदूर",
     "profile": "प्रोफ़ाइल",
     "history": "इतिहास",
     "settings": "सेटिंग्स"
@@ -46,6 +47,27 @@
       "description_label": "विवरण",
       "urgent": "जरूरी",
       "submit": "काम दें"
+    },
+    "browse": {
+      "title": "मजदूर खोजें",
+      "filter_skill": "काम की तरह",
+      "all_skills": "सभी तरह के काम",
+      "filter_available": "केवल आज उपलब्ध",
+      "filter_rating": "न्यूनतम रेटिंग",
+      "all_ratings": "सभी रेटिंग",
+      "rating_4": "4⭐ और इससे अधिक",
+      "rating_45": "4.5⭐ और इससे अधिक",
+      "no_results": "आपके फ़िल्टर से मेल खाने वाले मजदूर नहीं मिले",
+      "day_rate": "दिन की मजदूरी",
+      "half_day_rate": "आधे दिन की मजदूरी",
+      "request_worker": "इस मजदूर से अनुरोध करें",
+      "select_date": "तारीख चुनें",
+      "confirm_request": "अनुरोध की पुष्टि करें",
+      "request_sent": "मजदूर को अनुरोध भेज दिया",
+      "reliability_warning": "विश्वसनीयता संबंधी चिंताएं",
+      "rates": "दरें",
+      "rating": "रेटिंग",
+      "jobs": "काम"
     }
   },
   "worker": {
@@ -110,6 +132,7 @@
   "common": {
     "loading": "लोड हो रहा है...",
     "error": "कुछ गड़बड़ हो गई",
+    "success": "सफल",
     "retry": "फिर से कोशिश करें",
     "cancel": "रद्द करें",
     "save": "सहेजें",
