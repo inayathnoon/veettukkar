@@ -1,6 +1,7 @@
 import { useState, useCallback } from 'react';
 import { auth, firestore, collections } from '../lib/firebase';
 import { UserRole, UserDocument } from '../types';
+import { logError } from '../lib/crashlytics';
 
 interface PhoneVerificationState {
   loading: boolean;
@@ -45,6 +46,7 @@ export function useAuth() {
       return { success: true, verificationId: confirmation.verificationId };
     } catch (error: any) {
       const errorMsg = error?.message || 'Failed to send OTP';
+      logError(error, { action: 'sendOTP', phone: phoneNumber });
       setPhoneVerification({
         loading: false,
         error: errorMsg,
@@ -67,6 +69,7 @@ export function useAuth() {
         return { success: true };
       } catch (error: any) {
         const errorMsg = error?.message || 'Failed to verify OTP';
+        logError(error, { action: 'verifyOTP' });
         setPhoneVerification((prev) => ({ ...prev, error: errorMsg }));
 
         return { success: false, error: errorMsg };
@@ -119,6 +122,7 @@ export function useAuth() {
         return { success: true, user: finalDoc };
       } catch (error: any) {
         const errorMsg = error?.message || 'Failed to create user profile';
+        logError(error, { action: 'createUserProfile', role });
         setAuthState({
           user: null,
           loading: false,
@@ -156,6 +160,7 @@ export function useAuth() {
       setAuthState({ user: null, loading: false, error: null });
       return null;
     } catch (error: any) {
+      logError(error, { action: 'getCurrentUser' });
       setAuthState({
         user: null,
         loading: false,
@@ -177,6 +182,7 @@ export function useAuth() {
       return { success: true };
     } catch (error: any) {
       const errorMsg = error?.message || 'Failed to logout';
+      logError(error, { action: 'logout' });
       setAuthState((prev) => ({ ...prev, loading: false, error: errorMsg }));
 
       return { success: false, error: errorMsg };

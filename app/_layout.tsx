@@ -5,6 +5,7 @@ import auth, { FirebaseAuthTypes } from '@react-native-firebase/auth';
 import { collections } from '../lib/firebase';
 import { UserDocument } from '../types';
 import { useNotifications } from '../hooks/useNotifications';
+import { ErrorBoundary } from '../components/ErrorBoundary';
 
 function useProtectedRoute(user: FirebaseAuthTypes.User | null, role: string | null, isAdmin: boolean) {
   const segments = useSegments();
@@ -62,5 +63,9 @@ export default function RootLayout() {
 
   if (initialising) return null;
 
-  return <Slot />;
+  return (
+    <ErrorBoundary>
+      <Slot />
+    </ErrorBoundary>
+  );
 }

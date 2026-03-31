@@ -1,6 +1,7 @@
 import { useState, useCallback } from 'react';
 import { auth, firestore, collections } from '../lib/firebase';
 import { UserDocument, WorkerSkill } from '../types';
+import { logError } from '../lib/crashlytics';
 
 interface WorkerBrowseState {
   workers: UserDocument[];
@@ -44,6 +45,7 @@ export function useWorkerBrowse() {
         return workers;
       } catch (error: any) {
         const msg = error?.message || 'Failed to browse workers';
+        logError(error, { action: 'browseWorkers', skill });
         setState({ workers: [], loading: false, error: msg });
         return [];
       }

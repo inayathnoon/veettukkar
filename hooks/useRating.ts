@@ -1,6 +1,7 @@
 import { useState, useCallback } from 'react';
 import { auth, firestore, collections } from '../lib/firebase';
 import { RatingDocument, RatingDirection } from '../types';
+import { logError } from '../lib/crashlytics';
 
 interface RatingState {
   submitting: boolean;
@@ -52,6 +53,7 @@ export function useRating() {
         return { success: true };
       } catch (error: any) {
         const msg = error?.message || 'Failed to submit rating';
+        logError(error, { action: 'submitRating', direction, stars });
         setState({ submitting: false, error: msg, submitted: false });
         return { success: false, error: msg };
       }

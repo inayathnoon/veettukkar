@@ -2,6 +2,7 @@ import { useState, useCallback } from 'react';
 import { auth, firestore, collections } from '../lib/firebase';
 import { JobDocument, WorkerSkill, JobDuration } from '../types';
 import { geohashForLocation } from '../lib/geohash';
+import { logError } from '../lib/crashlytics';
 
 export interface PostJobInput {
   skill: WorkerSkill;
@@ -49,6 +50,7 @@ export function useJobs() {
       return jobs;
     } catch (error: any) {
       const msg = error?.message || 'Failed to load jobs';
+      logError(error, { action: 'loadMyJobs' });
       setJobsState({ jobs: [], loading: false, error: msg });
       return [];
     }
@@ -95,6 +97,7 @@ export function useJobs() {
       setPosting(false);
       return { success: true, jobId };
     } catch (error: any) {
+      logError(error, { action: 'postJob', skill: input.skill });
       setPosting(false);
       return { success: false, error: error?.message || 'Failed to post job' };
     }
@@ -134,6 +137,7 @@ export function useJobs() {
 
       return { success: true };
     } catch (error: any) {
+      logError(error, { action: 'cancelJob', jobId });
       return { success: false, error: error?.message || 'Failed to cancel job' };
     }
   }, []);
