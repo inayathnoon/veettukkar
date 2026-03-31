@@ -4,6 +4,7 @@ import { Slot, useRouter, useSegments } from 'expo-router';
 import auth, { FirebaseAuthTypes } from '@react-native-firebase/auth';
 import { collections } from '../lib/firebase';
 import { UserDocument } from '../types';
+import { useNotifications } from '../hooks/useNotifications';
 
 function useProtectedRoute(user: FirebaseAuthTypes.User | null, role: string | null, isAdmin: boolean) {
   const segments = useSegments();
@@ -32,6 +33,9 @@ export default function RootLayout() {
   const [role, setRole] = useState<string | null>(null);
   const [isAdmin, setIsAdmin] = useState(false);
   const [initialising, setInitialising] = useState(true);
+
+  // Wire in notification deep linking
+  useNotifications();
 
   useEffect(() => {
     const unsubscribe = auth().onAuthStateChanged(async (firebaseUser) => {
